@@ -4,7 +4,7 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
-const bot = new TelegramBot("6325369982:AAHUdY2kNM2ePKZzSjBvgru6c2ys_0U3HFg", {
+const bot = new TelegramBot(process.env.TOKEN, {
   polling: true,
 });
 
