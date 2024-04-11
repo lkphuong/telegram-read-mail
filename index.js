@@ -1,5 +1,8 @@
 const TelegramBot = require("node-telegram-bot-api");
 const axios = require("axios");
+const express = require("express");
+const app = express();
+const port = 3000;
 
 const bot = new TelegramBot("6325369982:AAHUdY2kNM2ePKZzSjBvgru6c2ys_0U3HFg", {
   polling: true,
@@ -19,6 +22,7 @@ bot.on("message", async (msg) => {
       );
 
       if (content.status === 200) {
+        console.log("Bot sending email");
         bot.sendMessage(msg.chat.id, content.data.text);
       }
     } else {
@@ -27,4 +31,12 @@ bot.on("message", async (msg) => {
   } catch (err) {
     bot.sendMessage(msg.chat.id, "I'm sorry, I don't send email.");
   }
+});
+
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
 });
