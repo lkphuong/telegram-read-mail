@@ -4,6 +4,10 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
+require("dotenv").config();
+
+console.log(process.env.TOKEN);
+
 const bot = new TelegramBot(process.env.TOKEN, {
   polling: true,
 });
