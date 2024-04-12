@@ -1,0 +1,35 @@
+version: '3.1'
+services:
+  my-service:
+    image: phuonglk/my-service:1.1
+    environment:
+      - NODE_ENV=development
+    networks:
+      - net-my-service
+    volumes:
+      - ./logs:/opt/app/logs
+      - ./uploads:/opt/app/uploads
+    restart: 'always'
+    deploy:
+      mode: replicated
+      replicas: 1
+      endpoint_mode: vip
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      rollback_config:
+        parallelism: 2
+        delay: 10s
+        failure_action: pause
+        order: stop-first
+      update_config:
+        parallelism: 2
+        delay: 10s
+        failure_action: rollback
+        order: stop-first
+
+networks:
+  net-warehouse:
+    driver: bridge
